@@ -99,8 +99,8 @@
         <span class="cri">…</span> → gras + couleur + badge « 🎭 »)
 
    Nommage des images (mot-clé = dossier) :
-     galerie/vocabulaire → images/<thème>/<mot>.png     (ex images/animaux/chat.png)
-     histoire            → images/<histoire>/<histoire>-<n>.png  (ex images/lapin/lapin-1.png)
+     galerie/vocabulaire → images/<thème>/<mot>.jpeg     (ex images/animaux/chat.jpeg)
+     histoire            → images/<histoire>/<histoire>_<n>.jpeg  (ex images/lapin/lapin_1.jpeg)
    ========================================================================= */
 
 const ANIMAUX = [
@@ -128,29 +128,29 @@ const ONGLETS = [
       { title:true, kicker:"Découverte · comptine & devinettes", h1:"Les animaux",
         sub:"On regarde, on écoute, on devine ! Je fais le son, tu dis le nom. 🐾" },
 
-      ...ANIMAUX.map(a => ({ animal:true, img:"images/animaux/"+a.slug+".png", alt:a.nom, name:a.nom, son:a.son })),
+      ...ANIMAUX.map(a => ({ animal:true, img:"images/animaux/"+a.slug+".jpeg", alt:a.nom, name:a.nom, son:a.son })),
 
       { title:true, kicker:"Jeu de mots · devinette", h1:"🔍 Devinette",
         sub:"Toute la planche d'un coup d'œil. Je fais un bruit, tu montres l'animal ! Ou je pose une question." },
-      { img:"images/planches/animaux.png", alt:"La planche de tous les animaux",
+      { img:"images/planches/animaux.jpeg", alt:"La planche de tous les animaux",
         html:"Devine : je fais le bruit, tu montres l'animal. 🔍" },
 
       { title:true, kicker:"Action ! On joue", h1:"L'histoire de Petit Lapin",
         sub:"Chacun a sa carte-animal. Quand j'appelle ton animal, tu viens sur scène et tu fais le son ! 🎭" },
 
-      { img:"images/lapin/lapin-1.png", alt:"Petit Lapin devant sa maison",
+      { img:"images/lapin/lapin_1.jpeg", alt:"Petit Lapin devant sa maison",
         html:"Petit Lapin sort de sa maison. Il saute : sautille, sautille ! 🐰" },
-      { img:"images/lapin/lapin-2.png", alt:"Petit Lapin rencontre le chat",
+      { img:"images/lapin/lapin_2.jpeg", alt:"Petit Lapin rencontre le chat",
         html:"Petit Lapin rencontre le Chat. <span class=\"cri\">« Bonjour Chat ! »</span><br>Le chat dit : <span class=\"cri\">Miaou !</span>" },
-      { img:"images/lapin/lapin-3.png", alt:"Petit Lapin rencontre le chien",
+      { img:"images/lapin/lapin_3.jpeg", alt:"Petit Lapin rencontre le chien",
         html:"Ils marchent ensemble et rencontrent le Chien. <span class=\"cri\">« Bonjour Chien ! »</span><br>Le chien dit : <span class=\"cri\">Ouaf !</span>" },
-      { img:"images/lapin/lapin-4.png", alt:"Petit Lapin rencontre la vache",
+      { img:"images/lapin/lapin_4.jpeg", alt:"Petit Lapin rencontre la vache",
         html:"Un peu plus loin, voici la Vache. <span class=\"cri\">« Bonjour Vache ! »</span><br>La vache dit : <span class=\"cri\">Meuh !</span>" },
-      { img:"images/lapin/lapin-5.png", alt:"Petit Lapin rencontre le canard",
+      { img:"images/lapin/lapin_5.jpeg", alt:"Petit Lapin rencontre le canard",
         html:"Et près de la mare, le Canard. <span class=\"cri\">« Bonjour Canard ! »</span><br>Le canard dit : <span class=\"cri\">Coin coin !</span>" },
-      { img:"images/lapin/lapin-6.png", alt:"Il pleut, tout le monde court",
+      { img:"images/lapin/lapin_6.jpeg", alt:"Il pleut, tout le monde court",
         html:"Soudain, il pleut : plic, ploc, plic, ploc ! 🌧️<br>Tout le monde court vers la maison de Petit Lapin." },
-      { img:"images/lapin/lapin-7.png", alt:"Ils mangent un gâteau, tout le monde est content",
+      { img:"images/lapin/lapin_7.jpeg", alt:"Ils mangent un gâteau, tout le monde est content",
         html:"À l'intérieur, ils mangent un bon gâteau. <span class=\"cri\">Miam !</span> 🍰<br>Et ils sont tous contents. 😊" }
     ]
   },
@@ -163,19 +163,19 @@ const ONGLETS = [
       { title:true, kicker:"Histoire à jouer", h1:"La galette qui roule",
         sub:"La galette s'échappe et rencontre plein d'animaux… jusqu'au renard ! Chacun joue un animal. 🎭" },
 
-      { img:"images/galette/galette-1.png", alt:"Mamie pose la galette sur la fenêtre",
+      { img:"images/galette/galette_1.jpeg", alt:"Mamie pose la galette sur la fenêtre",
         html:"Mamie fait une belle galette toute dorée. Elle la pose sur la fenêtre pour la faire refroidir." },
-      { img:"images/galette/galette-2.png", alt:"La galette saute et roule dehors",
+      { img:"images/galette/galette_2.jpeg", alt:"La galette saute et roule dehors",
         html:"Mais hop ! La galette saute et roule dehors. Elle chante :<br><span class=\"cri\">Roule, roule, galette, attrape-moi si tu peux !</span>" },
-      { img:"images/galette/galette-3.png", alt:"La galette rencontre le lapin",
+      { img:"images/galette/galette_3.jpeg", alt:"La galette rencontre le lapin",
         html:"Elle rencontre le Lapin. Le lapin dit : <span class=\"cri\">Je vais te manger !</span><br>La galette roule et chante : <span class=\"cri\">Roule, roule, galette !</span>" },
-      { img:"images/galette/galette-4.png", alt:"La galette rencontre le loup",
+      { img:"images/galette/galette_4.jpeg", alt:"La galette rencontre le loup",
         html:"Elle rencontre le Loup. Le loup dit : <span class=\"cri\">Je vais te manger !</span><br>La galette roule et chante : <span class=\"cri\">Roule, roule, galette !</span>" },
-      { img:"images/galette/galette-5.png", alt:"La galette rencontre l'ours",
+      { img:"images/galette/galette_5.jpeg", alt:"La galette rencontre l'ours",
         html:"Elle rencontre l'Ours. L'ours dit : <span class=\"cri\">Je vais te manger !</span><br>La galette roule et chante : <span class=\"cri\">Roule, roule, galette !</span>" },
-      { img:"images/galette/galette-6.png", alt:"La galette rencontre le renard malin",
+      { img:"images/galette/galette_6.jpeg", alt:"La galette rencontre le renard malin",
         html:"Elle rencontre le Renard, tout malin. Il dit tout doucement : « Comme tu chantes bien ! Approche un peu… »<br>La galette s'approche… et HAM ! <span class=\"cri\">Le renard la croque !</span>" },
-      { img:"images/galette/galette-7.png", alt:"Le renard se régale",
+      { img:"images/galette/galette_7.jpeg", alt:"Le renard se régale",
         html:"Le renard se régale : <span class=\"cri\">Miam !</span> 🦊<br>Et la galette ? Envolée ! On rejoue ? 😄" }
     ]
   },
@@ -188,19 +188,19 @@ const ONGLETS = [
       { title:true, kicker:"Les aventures de Maya et Malo · Épisode 1", h1:"Bienvenue à Bruxelles !",
         sub:"Maya et Malo nous font visiter leur ville. Quand ils parlent, on répète les mots en couleur ! 🎭" },
 
-      { img:"images/bruxelles/bruxelles-1.png", alt:"Maya et Malo, les deux enfants",
+      { img:"images/bruxelles/bruxelles_1.jpeg", alt:"Maya et Malo, les deux enfants",
         html:"Voici Maya et Malo. Ils habitent à Bruxelles.<br>Ils nous disent : <span class=\"cri\">Bonjour !</span>" },
-      { img:"images/bruxelles/bruxelles-2.png", alt:"La Grand-Place de Bruxelles",
+      { img:"images/bruxelles/bruxelles_2.jpeg", alt:"La Grand-Place de Bruxelles",
         html:"Ils nous emmènent sur la Grand-Place. C'est immense et tout doré !<br>Maya dit : <span class=\"cri\">Waouh !</span>" },
-      { img:"images/bruxelles/bruxelles-3.png", alt:"Une gaufre de Bruxelles",
+      { img:"images/bruxelles/bruxelles_3.jpeg", alt:"Une gaufre de Bruxelles",
         html:"Ça sent très bon… une gaufre !<br>Malo croque dedans : <span class=\"cri\">Miam, une gaufre !</span>" },
-      { img:"images/bruxelles/bruxelles-4.png", alt:"Un cornet de frites belges",
+      { img:"images/bruxelles/bruxelles_4.jpeg", alt:"Un cornet de frites belges",
         html:"Et voici les frites belges, dans un petit cornet.<br>Maya goûte : <span class=\"cri\">Mmmh, c'est bon !</span>" },
-      { img:"images/bruxelles/bruxelles-5.png", alt:"La statue du Manneken-Pis",
+      { img:"images/bruxelles/bruxelles_5.jpeg", alt:"La statue du Manneken-Pis",
         html:"Regardez cette petite statue rigolote : le Manneken-Pis !<br>Les enfants rient : <span class=\"cri\">Ha ha ha !</span>" },
-      { img:"images/bruxelles/bruxelles-6.png", alt:"Un enfant de Bruxelles vient jouer",
+      { img:"images/bruxelles/bruxelles_6.jpeg", alt:"Un enfant de Bruxelles vient jouer",
         html:"Un enfant de Bruxelles arrive vers nous.<br>Il dit : <span class=\"cri\">Salut ! Tu joues avec moi ?</span>" },
-      { img:"images/bruxelles/bruxelles-7.png", alt:"Le soir tombe, Maya et Malo saluent",
+      { img:"images/bruxelles/bruxelles_7.jpeg", alt:"Le soir tombe, Maya et Malo saluent",
         html:"Le soir tombe. Maya et Malo nous saluent : <span class=\"cri\">Au revoir Bruxelles !</span><br>La prochaine fois, on prend le train pour Paris ! 🚄" }
     ]
   },
