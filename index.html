@@ -1,0 +1,309 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>IdyKids — Have Fun with French · Les histoires</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,600;12..96,700;12..96,800&family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --navy:#0d2c4f; --yellow:#fdb324; --orange:#dd490a; --sky:#c5e0f6;
+    --paper:#faf6ee; --ink:#0d2c4f; --muted:#5b6b7d; --line:#e8e6df; --cri:#dd490a;
+  }
+  *{box-sizing:border-box}
+  @media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+  html,body{height:100%}
+  body{margin:0;font-family:"DM Sans",system-ui,sans-serif;color:var(--ink);background:var(--paper);
+    display:flex;flex-direction:column;padding-top:env(safe-area-inset-top,0);padding-bottom:env(safe-area-inset-bottom,0);overflow:hidden}
+
+  .bar{display:flex;align-items:center;gap:12px;padding:9px 16px;flex:none;border-bottom:1px solid var(--line);background:var(--navy);color:#fff}
+  .bar__brand{font-family:"Bricolage Grotesque",sans-serif;font-weight:800;font-size:14px;flex:1;min-width:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+  .bar__brand span{color:var(--yellow)}
+  .bar__count{font-variant-numeric:tabular-nums;font-size:12px;color:#b9c8da;flex:none}
+  .icon-btn{border:1px solid rgba(255,255,255,.25);background:transparent;border-radius:9px;font:inherit;font-size:15px;padding:5px 9px;cursor:pointer;color:#fff;flex:none}
+  .icon-btn:hover{border-color:#fff}
+
+  /* onglets */
+  .tabs{flex:none;display:flex;gap:8px;overflow-x:auto;padding:10px 16px;background:#fff;border-bottom:1px solid var(--line);scrollbar-width:none}
+  .tabs::-webkit-scrollbar{display:none}
+  .tab{flex:none;border:1px solid var(--line);background:var(--paper);border-radius:999px;font:inherit;font-weight:700;font-size:14px;
+    padding:8px 15px;cursor:pointer;color:var(--muted);white-space:nowrap}
+  .tab:hover{border-color:var(--sky)}
+  .tab[aria-selected="true"]{background:var(--navy);color:#fff;border-color:var(--navy)}
+
+  .stage{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:clamp(14px,3vh,28px);
+    padding:clamp(16px,4vh,40px) clamp(16px,5vw,64px);min-height:0;cursor:pointer;text-align:center;position:relative}
+  .imgwrap{flex:0 1 auto;display:flex;align-items:center;justify-content:center;width:min(680px,90vw);max-height:50vh}
+  .imgwrap img{max-width:100%;max-height:50vh;border-radius:20px;object-fit:contain;box-shadow:0 10px 40px rgba(13,44,79,.14)}
+  .placeholder{width:min(520px,78vw);aspect-ratio:16/10;border:3px dashed #c3ccd6;border-radius:20px;display:flex;flex-direction:column;
+    align-items:center;justify-content:center;gap:8px;color:var(--muted);background:#fff;padding:20px;text-align:center}
+  .placeholder .big{font-size:40px}
+  .placeholder code{font-size:12px;background:var(--paper);border:1px solid var(--line);border-radius:6px;padding:3px 8px;color:#334}
+
+  .texte{width:100%;display:flex;flex-direction:column;align-items:center}
+  .texte p{font-size:clamp(22px,3.4vw,36px);line-height:1.3;font-weight:500;margin:0;max-width:24ch}
+  .texte .cri{color:var(--cri);font-weight:800}
+  .animal-name{color:var(--cri);font-weight:800;font-family:"Bricolage Grotesque",sans-serif;font-size:clamp(34px,7vw,62px);line-height:1.05;margin:0}
+  .animal-son{color:var(--muted);font-size:clamp(15px,2.6vw,22px);font-style:italic;margin:8px 0 0}
+  .cue{display:inline-flex;align-items:center;gap:7px;margin-top:14px;background:#fff4e6;border:1px solid #f6d9b0;color:#b8460f;border-radius:999px;padding:6px 14px;font-size:14px;font-weight:700}
+
+  .title-screen{display:flex;flex-direction:column;align-items:center;gap:10px}
+  .title-screen .kicker{letter-spacing:.2em;text-transform:uppercase;font-size:12px;color:var(--orange);font-weight:700}
+  .title-screen h1{font-family:"Bricolage Grotesque",sans-serif;font-weight:800;font-size:clamp(30px,6vw,58px);line-height:1.05;margin:2px 0 6px;max-width:16ch}
+  .title-screen .sub{color:var(--muted);font-size:clamp(15px,2.4vw,19px);max-width:34ch}
+
+  .nav{flex:none;display:flex;align-items:center;justify-content:center;gap:16px;padding:14px 18px calc(14px + env(safe-area-inset-bottom,0));border-top:1px solid var(--line);background:#fff}
+  .nav__btn{border:0;border-radius:999px;font:inherit;font-weight:700;font-size:16px;cursor:pointer;padding:12px 26px;background:var(--navy);color:#fff;display:inline-flex;align-items:center;gap:8px}
+  .nav__btn:hover{filter:brightness(1.08)}
+  .nav__btn:disabled{opacity:.35;cursor:default;filter:none}
+  .nav__btn--ghost{background:#eef1f5;color:var(--navy)}
+  .dots{display:flex;gap:6px;align-items:center;max-width:50vw;overflow:hidden;flex-wrap:wrap;justify-content:center}
+  .dot{width:8px;height:8px;border-radius:50%;background:#cfd8e2;border:0;padding:0;cursor:pointer;flex:none}
+  .dot[aria-current="true"]{background:var(--orange);transform:scale(1.3)}
+
+  a:focus-visible,button:focus-visible{outline:3px solid var(--yellow);outline-offset:3px;border-radius:10px}
+  @media (max-width:560px){.nav__btn{padding:11px 18px;font-size:15px}.imgwrap img,.imgwrap{max-height:36vh}.dots{max-width:34vw}}
+</style>
+</head>
+<body>
+
+<div class="bar">
+  <span class="bar__brand">IdyKids · <span>Have Fun with French</span></span>
+  <span class="bar__count" id="count">1 / 1</span>
+  <button class="icon-btn" id="fsBtn" type="button" title="Plein écran">⛶</button>
+</div>
+
+<div class="tabs" id="tabs" role="tablist"></div>
+
+<div class="stage" id="stage"></div>
+
+<div class="nav">
+  <button class="nav__btn nav__btn--ghost" id="prev" type="button">← Retour</button>
+  <div class="dots" id="dots"></div>
+  <button class="nav__btn" id="next" type="button">Suite →</button>
+</div>
+
+<script>
+/* =========================================================================
+   TOUT LE CONTENU VIT ICI.
+   1 onglet = 1 activité (découverte + histoire à jouer).
+   Pour ajouter une histoire : copie un bloc dans ONGLETS.
+
+   Types d'écran :
+   - { title:true, kicker, h1, sub }        → écran-titre
+   - { animal:true, img, alt, name, son }    → un animal (image + nom + cri)
+   - { img, alt, html }                      → écran d'histoire
+       (dans html : narrateur en noir ; réplique des enfants entre
+        <span class="cri">…</span> → gras + couleur + badge « 🎭 »)
+
+   Nommage des images (mot-clé = dossier) :
+     galerie/vocabulaire → images/<thème>/<mot>.png     (ex images/animaux/chat.png)
+     histoire            → images/<histoire>/<histoire>-<n>.png  (ex images/lapin/lapin-1.png)
+   ========================================================================= */
+
+const ANIMAUX = [
+  { nom:"le cochon",  slug:"cochon",  son:"groin groin" },
+  { nom:"la vache",   slug:"vache",   son:"meuh" },
+  { nom:"le mouton",  slug:"mouton",  son:"bêê" },
+  { nom:"le serpent", slug:"serpent", son:"ssss" },
+  { nom:"le chien",   slug:"chien",   son:"ouaf" },
+  { nom:"le chat",    slug:"chat",    son:"miaou" },
+  { nom:"le coq",     slug:"coq",     son:"cocorico" },
+  { nom:"le canard",  slug:"canard",  son:"coin coin" },
+  { nom:"l'abeille",  slug:"abeille", son:"bzzz" },
+  { nom:"le loup",    slug:"loup",    son:"hou hou" },
+  { nom:"le lion",    slug:"lion",    son:"rôôô" },
+  { nom:"le cheval",  slug:"cheval",  son:"hiii" }
+];
+
+const ONGLETS = [
+
+  /* ======================= ONGLET 1 ======================= */
+  {
+    id:"lapin",
+    label:"🐰 Petit Lapin & les animaux",
+    screens: [
+      { title:true, kicker:"Découverte · comptine & devinettes", h1:"Les animaux",
+        sub:"On regarde, on écoute, on devine ! Je fais le son, tu dis le nom. 🐾" },
+
+      ...ANIMAUX.map(a => ({ animal:true, img:"images/animaux/"+a.slug+".png", alt:a.nom, name:a.nom, son:a.son })),
+
+      { title:true, kicker:"Jeu de mots · devinette", h1:"🔍 Devinette",
+        sub:"Toute la planche d'un coup d'œil. Je fais un bruit, tu montres l'animal ! Ou je pose une question." },
+      { img:"images/planches/animaux.png", alt:"La planche de tous les animaux",
+        html:"Devine : je fais le bruit, tu montres l'animal. 🔍" },
+
+      { title:true, kicker:"Action ! On joue", h1:"L'histoire de Petit Lapin",
+        sub:"Chacun a sa carte-animal. Quand j'appelle ton animal, tu viens sur scène et tu fais le son ! 🎭" },
+
+      { img:"images/lapin/lapin-1.png", alt:"Petit Lapin devant sa maison",
+        html:"Petit Lapin sort de sa maison. Il saute : sautille, sautille ! 🐰" },
+      { img:"images/lapin/lapin-2.png", alt:"Petit Lapin rencontre le chat",
+        html:"Petit Lapin rencontre le Chat. <span class=\"cri\">« Bonjour Chat ! »</span><br>Le chat dit : <span class=\"cri\">Miaou !</span>" },
+      { img:"images/lapin/lapin-3.png", alt:"Petit Lapin rencontre le chien",
+        html:"Ils marchent ensemble et rencontrent le Chien. <span class=\"cri\">« Bonjour Chien ! »</span><br>Le chien dit : <span class=\"cri\">Ouaf !</span>" },
+      { img:"images/lapin/lapin-4.png", alt:"Petit Lapin rencontre la vache",
+        html:"Un peu plus loin, voici la Vache. <span class=\"cri\">« Bonjour Vache ! »</span><br>La vache dit : <span class=\"cri\">Meuh !</span>" },
+      { img:"images/lapin/lapin-5.png", alt:"Petit Lapin rencontre le canard",
+        html:"Et près de la mare, le Canard. <span class=\"cri\">« Bonjour Canard ! »</span><br>Le canard dit : <span class=\"cri\">Coin coin !</span>" },
+      { img:"images/lapin/lapin-6.png", alt:"Il pleut, tout le monde court",
+        html:"Soudain, il pleut : plic, ploc, plic, ploc ! 🌧️<br>Tout le monde court vers la maison de Petit Lapin." },
+      { img:"images/lapin/lapin-7.png", alt:"Ils mangent un gâteau, tout le monde est content",
+        html:"À l'intérieur, ils mangent un bon gâteau. <span class=\"cri\">Miam !</span> 🍰<br>Et ils sont tous contents. 😊" }
+    ]
+  },
+
+  /* ======================= ONGLET 2 ======================= */
+  {
+    id:"galette",
+    label:"🥮 La galette qui roule",
+    screens: [
+      { title:true, kicker:"Histoire à jouer", h1:"La galette qui roule",
+        sub:"La galette s'échappe et rencontre plein d'animaux… jusqu'au renard ! Chacun joue un animal. 🎭" },
+
+      { img:"images/galette/galette-1.png", alt:"Mamie pose la galette sur la fenêtre",
+        html:"Mamie fait une belle galette toute dorée. Elle la pose sur la fenêtre pour la faire refroidir." },
+      { img:"images/galette/galette-2.png", alt:"La galette saute et roule dehors",
+        html:"Mais hop ! La galette saute et roule dehors. Elle chante :<br><span class=\"cri\">Roule, roule, galette, attrape-moi si tu peux !</span>" },
+      { img:"images/galette/galette-3.png", alt:"La galette rencontre le lapin",
+        html:"Elle rencontre le Lapin. Le lapin dit : <span class=\"cri\">Je vais te manger !</span><br>La galette roule et chante : <span class=\"cri\">Roule, roule, galette !</span>" },
+      { img:"images/galette/galette-4.png", alt:"La galette rencontre le loup",
+        html:"Elle rencontre le Loup. Le loup dit : <span class=\"cri\">Je vais te manger !</span><br>La galette roule et chante : <span class=\"cri\">Roule, roule, galette !</span>" },
+      { img:"images/galette/galette-5.png", alt:"La galette rencontre l'ours",
+        html:"Elle rencontre l'Ours. L'ours dit : <span class=\"cri\">Je vais te manger !</span><br>La galette roule et chante : <span class=\"cri\">Roule, roule, galette !</span>" },
+      { img:"images/galette/galette-6.png", alt:"La galette rencontre le renard malin",
+        html:"Elle rencontre le Renard, tout malin. Il dit tout doucement : « Comme tu chantes bien ! Approche un peu… »<br>La galette s'approche… et HAM ! <span class=\"cri\">Le renard la croque !</span>" },
+      { img:"images/galette/galette-7.png", alt:"Le renard se régale",
+        html:"Le renard se régale : <span class=\"cri\">Miam !</span> 🦊<br>Et la galette ? Envolée ! On rejoue ? 😄" }
+    ]
+  },
+
+  /* ======================= ONGLET 3 ======================= */
+  {
+    id:"bruxelles",
+    label:"🧇 Maya & Malo · Bruxelles",
+    screens: [
+      { title:true, kicker:"Les aventures de Maya et Malo · Épisode 1", h1:"Bienvenue à Bruxelles !",
+        sub:"Maya et Malo nous font visiter leur ville. Quand ils parlent, on répète les mots en couleur ! 🎭" },
+
+      { img:"images/bruxelles/bruxelles-1.png", alt:"Maya et Malo, les deux enfants",
+        html:"Voici Maya et Malo. Ils habitent à Bruxelles.<br>Ils nous disent : <span class=\"cri\">Bonjour !</span>" },
+      { img:"images/bruxelles/bruxelles-2.png", alt:"La Grand-Place de Bruxelles",
+        html:"Ils nous emmènent sur la Grand-Place. C'est immense et tout doré !<br>Maya dit : <span class=\"cri\">Waouh !</span>" },
+      { img:"images/bruxelles/bruxelles-3.png", alt:"Une gaufre de Bruxelles",
+        html:"Ça sent très bon… une gaufre !<br>Malo croque dedans : <span class=\"cri\">Miam, une gaufre !</span>" },
+      { img:"images/bruxelles/bruxelles-4.png", alt:"Un cornet de frites belges",
+        html:"Et voici les frites belges, dans un petit cornet.<br>Maya goûte : <span class=\"cri\">Mmmh, c'est bon !</span>" },
+      { img:"images/bruxelles/bruxelles-5.png", alt:"La statue du Manneken-Pis",
+        html:"Regardez cette petite statue rigolote : le Manneken-Pis !<br>Les enfants rient : <span class=\"cri\">Ha ha ha !</span>" },
+      { img:"images/bruxelles/bruxelles-6.png", alt:"Un enfant de Bruxelles vient jouer",
+        html:"Un enfant de Bruxelles arrive vers nous.<br>Il dit : <span class=\"cri\">Salut ! Tu joues avec moi ?</span>" },
+      { img:"images/bruxelles/bruxelles-7.png", alt:"Le soir tombe, Maya et Malo saluent",
+        html:"Le soir tombe. Maya et Malo nous saluent : <span class=\"cri\">Au revoir Bruxelles !</span><br>La prochaine fois, on prend le train pour Paris ! 🚄" }
+    ]
+  },
+
+  /* ======================= ONGLET 4 ======================= */
+  {
+    id:"paris",
+    label:"🗼 Paris (à venir)",
+    screens: [
+      { title:true, kicker:"Prochain épisode", h1:"Paris, ça arrive !",
+        sub:"Maya et Malo prennent le train pour Paris. Épisode en préparation ✈️" }
+    ]
+  }
+
+];
+
+/* ========================= MOTEUR ========================= */
+let tab = 0, i = 0;
+const stage = document.getElementById("stage");
+const dotsEl = document.getElementById("dots");
+const tabsEl = document.getElementById("tabs");
+const countEl = document.getElementById("count");
+const prevBtn = document.getElementById("prev");
+const nextBtn = document.getElementById("next");
+
+function screens(){ return ONGLETS[tab].screens; }
+
+// barre d'onglets
+ONGLETS.forEach((o, n)=>{
+  const b = document.createElement("button");
+  b.className = "tab"; b.type = "button"; b.textContent = o.label;
+  b.setAttribute("role","tab");
+  b.setAttribute("aria-selected", n===0 ? "true":"false");
+  b.addEventListener("click", ()=>selectTab(n));
+  tabsEl.appendChild(b);
+});
+
+function buildDots(){
+  dotsEl.innerHTML = "";
+  screens().forEach((_, n)=>{
+    const b = document.createElement("button");
+    b.className = "dot"; b.type = "button";
+    b.setAttribute("aria-label", "Écran " + (n+1));
+    b.addEventListener("click", (e)=>{ e.stopPropagation(); go(n); });
+    dotsEl.appendChild(b);
+  });
+}
+
+function imgBlock(src){
+  return `<div class="imgwrap" data-src="${src||""}">
+      <div class="placeholder"><span class="big">🖼️</span><span>Image à ajouter</span><code>${src||"—"}</code></div>
+    </div>`;
+}
+
+function screenHTML(s){
+  if(s.title){
+    return `<div class="title-screen"><span class="kicker">${s.kicker||""}</span><h1>${s.h1||""}</h1><p class="sub">${s.sub||""}</p></div>`;
+  }
+  if(s.animal){
+    return `${imgBlock(s.img)}<div class="texte"><p class="animal-name">${s.name||""}</p>${s.son?`<p class="animal-son">« ${s.son} »</p>`:""}</div>`;
+  }
+  const hasCri = /class=["']cri["']/.test(s.html||"");
+  const cue = hasCri ? `<span class="cue">🎭 les enfants répètent</span>` : "";
+  return `${imgBlock(s.img)}<div class="texte"><p>${s.html||""}</p>${cue}</div>`;
+}
+
+function render(){
+  const s = screens()[i];
+  stage.innerHTML = screenHTML(s);
+  const wrap = stage.querySelector(".imgwrap");
+  if(wrap && wrap.dataset.src){
+    const test = new Image();
+    test.onload = ()=>{ wrap.innerHTML=""; const im=document.createElement("img"); im.src=wrap.dataset.src; im.alt=s.alt||""; wrap.appendChild(im); };
+    test.src = wrap.dataset.src;
+  }
+  countEl.textContent = (i+1) + " / " + screens().length;
+  [...dotsEl.children].forEach((d,n)=>d.setAttribute("aria-current", n===i ? "true":"false"));
+  prevBtn.disabled = i===0;
+  nextBtn.textContent = i===screens().length-1 ? "Fin ✓" : "Suite →";
+}
+
+function selectTab(n){
+  tab = n; i = 0;
+  [...tabsEl.children].forEach((t,k)=>t.setAttribute("aria-selected", k===n ? "true":"false"));
+  buildDots(); render();
+}
+function go(n){ i = Math.max(0, Math.min(screens().length-1, n)); render(); }
+function next(){ if(i < screens().length-1) go(i+1); }
+function prev(){ if(i > 0) go(i-1); }
+
+nextBtn.addEventListener("click", (e)=>{ e.stopPropagation(); next(); });
+prevBtn.addEventListener("click", (e)=>{ e.stopPropagation(); prev(); });
+stage.addEventListener("click", next);
+document.addEventListener("keydown", (e)=>{
+  if(e.key==="ArrowRight"||e.key===" "||e.key==="Enter"){ e.preventDefault(); next(); }
+  if(e.key==="ArrowLeft"){ e.preventDefault(); prev(); }
+});
+document.getElementById("fsBtn").addEventListener("click", (e)=>{
+  e.stopPropagation();
+  if(!document.fullscreenElement){ document.documentElement.requestFullscreen?.(); } else { document.exitFullscreen?.(); }
+});
+
+buildDots(); render();
+</script>
+</body>
+</html>
