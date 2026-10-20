@@ -122,10 +122,10 @@ const ALIMENTS = [
   { nom:"le beurre",    slug:"beurre" },
   { nom:"la galette",   slug:"galette" },
   { nom:"la gaufre",    slug:"gaufre" },
-  { nom:"les crêpes",   slug:"crepes" },
-  { nom:"les brocolis", slug:"brocolis" },
+  { nom:"les crêpes",   slug:"crepe" },
+  { nom:"les brocolis", slug:"brocoli" },
   { nom:"la tomate",    slug:"tomate" },
-  { nom:"la carotte",   slug:"carotte" },
+  { nom:"la carotte",   slug:"carote" },
   { nom:"le fromage",   slug:"fromage" }
 ];
 
@@ -173,7 +173,12 @@ const ONGLETS = [
     screens: [
       { title:true, kicker:"Chanson & jeu de goût", h1:"J'aime la galette 🎵",
         sub:"<b>J'aime la galette, savez-vous comment ?</b><br>Quand elle est bien faite, avec du beurre dedans !<br>La la la la lalala lère, la la la la lalala la !<br><br>Puis on joue : « Est-ce que tu aimes… ? » — j'aime 😋 / je n'aime pas 😝" },
-      ...ALIMENTS.map(a => ({ animal:true, img:"images/aliments/"+a.slug+".jpeg", alt:a.nom, name:a.nom })),
+      ...ALIMENTS.map(a => ({ animal:true, img:"images/aliments/"+a.slug+".jpg", alt:a.nom, name:a.nom })),
+
+      { title:true, kicker:"Jeu de goût · devinette", h1:"🔍 Devinette",
+        sub:"Toute la planche d'un coup d'œil. « Est-ce que tu aimes… ? » — montre, demande, devine !" },
+      { img:"images/planches/aliments.jpg", alt:"La planche de tous les aliments",
+        html:"Est-ce que tu aimes… ? Montre un aliment et réponds : j'aime 😋 / je n'aime pas 😝" },
 
       { title:true, kicker:"Histoire à jouer", h1:"La galette qui roule",
         sub:"La galette s'échappe et rencontre plein d'animaux… jusqu'au renard ! Chacun joue un animal. 🎭" },
