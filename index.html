@@ -47,6 +47,14 @@
   .texte .cri{color:var(--cri);font-weight:800}
   .animal-name{color:var(--cri);font-weight:800;font-family:"Bricolage Grotesque",sans-serif;font-size:clamp(30px,6vw,52px);line-height:1.05;margin:0}
   .animal-son{color:var(--muted);font-size:clamp(15px,2.6vw,22px);font-style:italic;margin:8px 0 0}
+  .jour-card{display:flex;flex-direction:column;align-items:center;gap:clamp(14px,3vh,24px)}
+  .jour-word{display:inline-flex;align-items:center;font-family:"Bricolage Grotesque",sans-serif;font-weight:800;font-size:clamp(40px,9vw,86px);line-height:1}
+  .jour-ini{display:inline-flex;align-items:center;justify-content:center;width:1.5em;height:1.5em;border-radius:50%;color:#fff;margin-right:.08em;box-shadow:0 6px 18px rgba(13,44,79,.18);text-shadow:0 1px 2px rgba(0,0,0,.2)}
+  .jour-rest{color:var(--navy)}
+  .jour-syll{display:flex;gap:clamp(12px,3vw,20px);align-items:center}
+  .jour-syll .sd{width:clamp(18px,3.6vw,28px);height:clamp(18px,3.6vw,28px);border-radius:50%}
+  .jour-lab{font-family:"DM Sans";font-size:14px;color:var(--muted)}
+  .depart-top{display:inline-block;font-family:"Bricolage Grotesque",sans-serif;font-weight:800;font-size:clamp(20px,4vw,34px);color:#fff;padding:8px 24px;border-radius:999px;box-shadow:0 6px 18px rgba(13,44,79,.18);text-shadow:0 1px 2px rgba(0,0,0,.2)}
   .cue{display:inline-flex;align-items:center;gap:7px;margin-top:14px;background:#fff4e6;border:1px solid #f6d9b0;color:#b8460f;border-radius:999px;padding:6px 14px;font-size:14px;font-weight:700}
 
   .title-screen{display:flex;flex-direction:column;align-items:center;gap:10px}
@@ -125,8 +133,18 @@ const ALIMENTS = [
   { nom:"les crêpes",   slug:"crepe" },
   { nom:"les brocolis", slug:"brocoli" },
   { nom:"la tomate",    slug:"tomate" },
-  { nom:"la carotte",   slug:"carote" },
+  { nom:"la carotte",   slug:"carotte" },
   { nom:"le fromage",   slug:"fromage" }
+];
+
+const JOURS = [
+  { nom:"Lundi",    syll:2, couleur:"#e8403a" },
+  { nom:"Mardi",    syll:2, couleur:"#ef8c00" },
+  { nom:"Mercredi", syll:3, couleur:"#d9a200" },
+  { nom:"Jeudi",    syll:2, couleur:"#2e9e5b" },
+  { nom:"Vendredi", syll:3, couleur:"#2d7dd2" },
+  { nom:"Samedi",   syll:2, couleur:"#7b5ea7" },
+  { nom:"Dimanche", syll:2, couleur:"#d6457f" }
 ];
 
 const ONGLETS = [
@@ -202,6 +220,40 @@ const ONGLETS = [
 
   /* ======================= ONGLET 3 ======================= */
   {
+    id:"petitprince",
+    label:"👑 Le roi, la reine & le petit prince",
+    screens: [
+      { title:true, kicker:"Vocabulaire · le rythme", h1:"Les jours de la semaine 📅",
+        sub:"On lit chaque jour, on regarde sa couleur et on tape les syllabes dans les mains ! 👏" },
+
+      ...JOURS.map(d => ({ jour:d })),
+
+      { title:true, kicker:"Chanson & histoire à jouer", h1:"Lundi matin 🎵",
+        sub:"<b>Lundi matin,</b><br>le roi, la reine et le petit prince<br>sont venus chez moi pour me serrer la main.<br>Mais comme j'étais parti,<br>le petit prince a dit :<br><b>« Puisque c'est ainsi, nous reviendrons mardi ! »</b>" },
+
+      { img:"images/petitprince/roi.jpg", alt:"Le roi",
+        html:"Voici le Roi. <span class=\"cri\">« Bonjour ! »</span> 👑" },
+      { img:"images/petitprince/reine.jpg", alt:"La reine",
+        html:"Voici la Reine. <span class=\"cri\">« Bonjour ! »</span> 👑" },
+      { img:"images/petitprince/prince.jpg", alt:"Le petit prince",
+        html:"Et voici le petit Prince. <span class=\"cri\">« Bonjour ! »</span> 👑" },
+      ...JOURS.flatMap((d,n)=>{
+        const nxt=JOURS[(n+1)%JOURS.length];
+        return [
+          // carte « [jour] matin » : ils viennent me serrer la main
+          { depart:{ jour:d.nom, couleur:d.couleur, matin:true,
+            intro:"Le roi, la reine et le petit prince<br>sont venus chez moi, pour me serrer la main.<br>Mais comme j'étais parti…" },
+            img:"images/petitprince/serrerlamain.jpg", alt:"Les trois saluent devant la porte" },
+          // carte « reviendrons [jour suivant] » : ils repartent
+          { depart:{ jour:nxt.nom, couleur:nxt.couleur },
+            img:"images/petitprince/reviendrons.jpg", alt:"Tous les trois repartent" }
+        ];
+      })
+    ]
+  },
+
+  /* ======================= ONGLET 4 ======================= */
+  {
     id:"bruxelles",
     label:"🧇 Maya & Malo · Bruxelles",
     screens: [
@@ -225,7 +277,7 @@ const ONGLETS = [
     ]
   },
 
-  /* ======================= ONGLET 4 ======================= */
+  /* ======================= ONGLET 5 ======================= */
   {
     id:"paris",
     label:"🗼 Paris (à venir)",
@@ -281,6 +333,25 @@ function screenHTML(s){
   }
   if(s.animal){
     return `${imgBlock(s.img)}<div class="texte"><p class="animal-name">${s.name||""}</p>${s.son?`<p class="animal-son">« ${s.son} »</p>`:""}</div>`;
+  }
+  if(s.jour){
+    const d=s.jour, ini=d.nom.charAt(0), rest=d.nom.slice(1);
+    const dots=Array.from({length:d.syll}).map(()=>`<span class="sd" style="background:${d.couleur}"></span>`).join("");
+    return `<div class="jour-card">
+      <div class="jour-word"><span class="jour-ini" style="background:${d.couleur}">${ini}</span><span class="jour-rest">${rest}</span></div>
+      <div class="jour-syll">${dots}</div>
+      <div class="jour-lab">${d.syll} fois dans les mains 👏</div>
+    </div>`;
+  }
+  if(s.depart){
+    const d=s.depart;
+    const top = `<div class="depart-top" style="background:${d.couleur}">📅 ${d.jour}${d.matin?" matin":""}</div>`;
+    if(d.intro){
+      return `${top}${imgBlock(s.img)}<div class="texte"><p>${d.intro}</p></div>`;
+    }
+    return `${top}${imgBlock(s.img)}
+      <div class="texte"><p>Le petit prince a dit :<br><span class="cri">« Puisque c'est ainsi, nous reviendrons ${d.jour} ! »</span></p>
+      <span class="cue">🎭 le petit prince répète</span></div>`;
   }
   const hasCri = /class=["']cri["']/.test(s.html||"");
   const cue = hasCri ? `<span class="cue">🎭 les enfants répètent</span>` : "";
