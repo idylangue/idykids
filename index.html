@@ -277,7 +277,12 @@ const ONGLETS = [
     screens: [
       { title:true, kicker:"Jeu · les couleurs", h1:"Qui a du rouge ? 🎨",
         sub:"Je montre une couleur. « Qui a du rouge ? » Cherche-la sur toi et montre-la : « J'ai du rouge ! » 👕" },
-      ...COULEURS.map(c => ({ couleur:c }))
+      ...COULEURS.map(c => ({ couleur:c })),
+
+      { title:true, kicker:"Toutes les couleurs · devinette", h1:"🔍 La planche",
+        sub:"Toutes les couleurs d'un coup d'œil. « Montre-moi le rouge ! » ou « De quelle couleur… ? »" },
+      { img:"images/planches/couleurs.jpg", alt:"La planche de toutes les couleurs",
+        html:"Montre-moi une couleur ! 🎨" }
     ]
   },
 
