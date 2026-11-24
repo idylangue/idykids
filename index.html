@@ -58,6 +58,9 @@
   .couleur-rond{width:clamp(130px,32vw,210px);height:clamp(130px,32vw,210px);border-radius:50%;border:4px solid rgba(13,44,79,.14);box-shadow:0 10px 30px rgba(13,44,79,.16)}
   .couleur-q{font-family:"Bricolage Grotesque",sans-serif;font-weight:800;font-size:clamp(26px,5vw,44px);color:var(--navy);margin:0}
   .couleur-rep{margin:0;font-size:clamp(20px,3.6vw,30px)}
+  .ville-nom{font-family:"Bricolage Grotesque",sans-serif;font-weight:800;font-size:clamp(24px,5vw,40px);margin:0 0 4px}
+  .km-carton{display:inline-block;font-family:"Bricolage Grotesque",sans-serif;font-weight:800;font-size:clamp(34px,7vw,60px);color:#fff;background:var(--orange);padding:4px 26px;border-radius:16px;box-shadow:0 6px 18px rgba(221,73,10,.3);margin:4px 0}
+  .ville-chant{margin:8px 0 0;font-size:clamp(17px,3vw,24px)}
   .emotion-card{display:flex;flex-direction:column;align-items:center;gap:clamp(8px,2vh,16px)}
   .emotion-emo{font-size:clamp(72px,20vw,150px);line-height:1}
   .depart-top{display:inline-block;font-family:"Bricolage Grotesque",sans-serif;font-weight:800;font-size:clamp(20px,4vw,34px);color:#fff;padding:8px 24px;border-radius:999px;box-shadow:0 6px 18px rgba(13,44,79,.18);text-shadow:0 1px 2px rgba(0,0,0,.2)}
@@ -177,6 +180,19 @@ const EMOTIONS = [
   { emo:"😌", mot:"calme" },
   { emo:"🙈", mot:"timide" },
   { emo:"🤩", mot:"excité·e" }
+];
+
+const VILLES = [
+  { ville:"Bruxelles", slug:"bruxelles", km:1,  pays:"🇧🇪" },
+  { ville:"Paris",     slug:"paris",     km:2,  pays:"🇫🇷" },
+  { ville:"New York",  slug:"newyork",   km:3,  pays:"🇺🇸" },
+  { ville:"Londres",   slug:"londres",   km:4,  pays:"🇬🇧" },
+  { ville:"Rome",      slug:"rome",      km:5,  pays:"🇮🇹" },
+  { ville:"Venise",    slug:"venise",    km:6,  pays:"🇮🇹" },
+  { ville:"Berlin",    slug:"berlin",    km:7,  pays:"🇩🇪" },
+  { ville:"Tokyo",     slug:"tokyo",     km:8,  pays:"🇯🇵" },
+  { ville:"Rio",       slug:"rio",       km:9,  pays:"🇧🇷" },
+  { ville:"Athènes",   slug:"athenes",   km:10, pays:"🇬🇷" }
 ];
 
 const ONGLETS = [
@@ -315,6 +331,28 @@ const ONGLETS = [
     ]
   },
 
+  /* ======================= ONGLET · MAYA VOYAGE ======================= */
+  {
+    id:"voyage",
+    label:"✈️ Maya voyage",
+    screens: [
+      { title:true, kicker:"Histoire à jouer · villes, nombres & chanson", h1:"Maya voyage ✈️",
+        sub:"Maya part en voyage ! À chaque ville : « Elle va où ? » On devine, on compte les km, et on chante ! 🎵" },
+
+      ...VILLES.flatMap(v => [
+        { img:"images/villes/"+v.slug+".jpg", alt:"Une ville mystère", html:"Elle va où ? 🤔" },
+        { ville:v, img:"images/villes/"+v.slug+".jpg" }
+      ]),
+
+      { title:true, kicker:"Et toi ?", h1:"Et toi, tu vas où ? 🌍",
+        sub:"Montre ta ville sur la planche et dis : « Je vais à… ! »" },
+      { img:"images/planches/villes.jpg", alt:"La planche des villes",
+        html:"Et toi, tu vas où ?<br><span class=\"cri\">— Je vais à… !</span>" },
+      { title:true, kicker:"On marche ensemble", h1:"On marche 1 km ! 👟",
+        sub:"1 km à pied, ça use ça use, 1 km à pied, ça use les souliers !" }
+    ]
+  },
+
   /* ======================= ONGLET · QUI ES-TU ? ======================= */
   {
     id:"quiestu",
@@ -438,6 +476,16 @@ function screenHTML(s){
       <p class="couleur-q">Aujourd'hui, je me sens…</p>
       <p class="couleur-rep"><span class="cri">${e.mot}</span></p>
     </div>`;
+  }
+  if(s.ville){
+    const v=s.ville;
+    return `${imgBlock(s.img)}
+      <div class="texte">
+        <p class="ville-nom">Maya va à ${v.ville} ! ${v.pays}</p>
+        <div class="km-carton">${v.km} km</div>
+        <p class="ville-chant"><span class="cri">${v.km} km à pied, ça use ça use, ${v.km} km à pied, ça use les souliers !</span></p>
+        <span class="cue">🎵 on chante et on marche !</span>
+      </div>`;
   }
   if(s.couleur){
     const c=s.couleur;
