@@ -336,8 +336,8 @@ const ONGLETS = [
     id:"voyage",
     label:"✈️ Maya voyage",
     screens: [
-      { title:true, kicker:"Histoire à jouer · villes, nombres & chanson", h1:"Maya voyage ✈️",
-        sub:"Maya part en voyage ! À chaque ville : « Elle va où ? » On devine, on compte les km, et on chante ! 🎵" },
+      { img:"images/villes/maya-voyage.jpg", alt:"Maya part faire le tour du monde",
+        html:"<b>Maya fait le tour du monde !</b><br>Bon voyage, Maya ! ✈️🌍<br>À chaque ville : « Elle va où ? » On devine, on compte les km, et on chante ! 🎵" },
 
       ...VILLES.flatMap(v => [
         { img:"images/villes/"+v.slug+".jpg", alt:"Une ville mystère", html:"Elle va où ? 🤔" },
